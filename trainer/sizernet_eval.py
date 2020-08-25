@@ -23,6 +23,7 @@ from data_utils.parser_data import ParserData
 from data_utils.geomtery import get_res_vert, get_vid
 
 device = torch.device("cuda:0")
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 
 class Runner(object):
     def __init__(self, ckpt, params):
@@ -75,8 +76,9 @@ class Runner(object):
 
         #interpenetraion loss term
         self.body_f_np = self.smpl.faces
-        self.garment_f_np = Mesh(
-            filename='/BS/garvita2/static00/ClothSize_data/gcn_assets/real_{}_{}_{}.obj'.format(self.garment_class, self.res_name, self.garment_layer)).f
+        self.garment_f_np = Mesh(filename=os.path.join(DATA_DIR,
+                                                       'real_{}_{}_{}.obj'.format(self.garment_class, self.res_name,
+                                                                                  self.garment_layer))).f
 
         self.garment_f_torch = torch.tensor(self.garment_f_np.astype(np.long)).long().to(device)
         # models and optimizer
@@ -168,7 +170,12 @@ def get_model(log_dir, epoch_num=None):
 
 
 if __name__ == '__main__':
-    log_dir = '/scratch/BS/pool1/garvita/sizer/g5/UpperClothes_hres'
+    parser = argparse.ArgumentParser(description='Evaluating ParserNet')
+
+    parser.add_argument('--log_dir', default="")
+    args = parser.parse_args()
+
+    log_dir = args.log_dir
     runner = get_model(log_dir)
     _, dist, gt, pred, body, gar_faces, body_faces = runner.eval_test()
     ipdb.set_trace()

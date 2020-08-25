@@ -8,6 +8,7 @@ import ipdb
 
 from data_utils.geomtery import  get_res_vert, get_vid
 
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 class ParserData(Dataset):
 
 
@@ -23,7 +24,7 @@ class ParserData(Dataset):
 
         #load data from file
         train_data = pickle.load(
-            open('/BS/garvita3/static00/SIZER/dataset/parsernet_{}_vc_vn_aug.pkl'.format(garment_class), 'rb'),
+            open(os.path.join(DATA_DIR, 'parsernet_{}_vc_vn_aug.pkl'.format(garment_class)), 'rb'),
             encoding="latin1")
 
         self.reg_mesh = np.array(train_data['reg']).astype(np.float32)[:, :self.body_size, :]
@@ -44,7 +45,7 @@ class ParserData(Dataset):
 
 
         #load train,val, test split
-        split_file = '/BS/garvita/static00/training_dataset/{}_split.pkl'.format(self.garment_class)
+        split_file = os.path.join(DATA_DIR, '{}_split.pkl'.format(self.garment_class))
         self.split_idx = pickle.load(open(split_file, 'rb'),
             encoding="latin1")[mode]
 

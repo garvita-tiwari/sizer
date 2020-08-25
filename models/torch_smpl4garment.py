@@ -8,7 +8,7 @@ import pickle
 
 from utils.smpl_paths import SmplPaths
 
-DATA_DIR = '/BS/cloth-anim/static00/tailor_data'
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 GAR_INFO_FILE = 'garment_class_info.pkl'
 class TorchSMPL4Garment(nn.Module):
     """Pytorch version of models.smpl4garment.SMPL4Garment class."""

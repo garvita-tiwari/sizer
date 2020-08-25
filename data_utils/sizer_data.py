@@ -8,6 +8,7 @@ import ipdb
 
 from data_utils.geomtery import  get_res_vert, get_vid
 
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 def one_hot(a, num_classes):
     hot = np.zeros((num_classes), np.uint8)
     hot[a] = 1
@@ -29,7 +30,7 @@ class SizerData(Dataset):
 
         #load data from file
         train_data = pickle.load(
-            open('/BS/garvita2/static00/ClothSize_data2/training_data/real_{}_size.pkl'.format(garment_class), 'rb'),
+            open(os.path.join(DATA_DIR, 'real_{}_size.pkl'.format(garment_class)), 'rb'),
             encoding="latin1")
 
         data_name = np.array(train_data['0']['scan_name'])
@@ -64,7 +65,7 @@ class SizerData(Dataset):
         self.size_label_hot3 = np.array([one_hot(i, 4) for i in size3]).astype(np.float32)
 
         #load train,val, test split
-        split_file = '/BS/garvita/static00/training_dataset/{}_size_split.pkl'.format(self.garment_class)
+        split_file = os.path.join(DATA_DIR, '{}_size_split.pkl'.format(self.garment_class))
         self.split_idx = pickle.load(open(split_file, 'rb'),
             encoding="latin1")[mode]
 

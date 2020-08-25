@@ -346,7 +346,3 @@ def get_vert_opposites_per_edge(mesh_v, mesh_f):
                 result[key] = [val]
     return result
 
-
-if __name__ == '__main__':
-    ms = Mesh(filename="/BS/cpatel/work/data/learn_anim/test_py3/t-shirt_male/0000/gt_0.ply")
-    b = get_boundary_verts(ms.v, ms.f)

@@ -22,6 +22,7 @@ from models.torch_smpl4garment import TorchSMPL4Garment
 from data_utils.sizer_data import  SizerData
 from data_utils.geomtery import  get_res_vert, get_vid
 
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 
 device = torch.device("cuda:0")
 
@@ -39,7 +40,7 @@ class Trainer(object):
             self.hres = False
 
         # log and backup
-        LOG_DIR = '/scratch/BS/pool1/garvita/sizer'
+        LOG_DIR = params['log_dir']
         self.model_name = "EncDec_{}".format(self.res_name)
 
         log_name = os.path.join(self.garment_class, '{}_{}'.format(self.garment_layer, self.res_name))
@@ -81,8 +82,9 @@ class Trainer(object):
 
         #interpenetraion loss term
         self.body_f_np = self.smpl.faces
-        self.garment_f_np = Mesh(
-            filename='/BS/garvita2/static00/ClothSize_data/gcn_assets/real_{}_{}_{}.obj'.format(self.garment_class, self.res_name, self.garment_layer)).f
+        self.garment_f_np = Mesh(filename=os.path.join(DATA_DIR,
+                                                       'real_{}_{}_{}.obj'.format(self.garment_class, self.res_name,
+                                                                                  self.garment_layer))).f
 
         self.garment_f_torch = torch.tensor(self.garment_f_np.astype(np.long)).long().to(device)
         # models and optimizer
@@ -249,6 +251,7 @@ def parse_argument():
 
     parser.add_argument('--garment_class', default="g5")
     parser.add_argument('--garment_layer', default="UpperClothes")
+    parser.add_argument('--log_dir', default="")
     parser.add_argument('--gender', default="male")
     parser.add_argument('--res', default="hres")
     parser.add_argument('--batch_size', default=8, type=int)

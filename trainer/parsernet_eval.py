@@ -22,6 +22,7 @@ from models.torch_smpl4garment import TorchSMPL4Garment
 
 from data_utils.parser_data import ParserData
 from data_utils.geomtery import get_res_vert, get_vid
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 
 device = torch.device("cuda:0")
 class Runner(object):
@@ -41,9 +42,8 @@ class Runner(object):
         self.model_name = 'FC_correspondence_{}'.format(self.res_name)
         self.layer_size, self.smpl_size = get_res_vert(params['garment_class'], self.hres, params['garment_layer'])
 
-        layer_neigh = np.array(np.load
-            ("/BS/garvita2/static00/ClothSize_data/gcn_assets/real_{}_neighborheuristics_{}_{}_{}_gar_order2.npy".format
-                (self.garment_class, self.res_name, self.garment_layer, self.num_neigh)))
+        layer_neigh = np.array(np.load(os.path.join(DATA_DIR, "real_{}_neighborheuristics_{}_{}_{}_gar_order2.npy".format(self.garment_class, self.res_name, self.garment_layer, self.num_neigh))))
+
         all_neighbors = np.array([[vid] for k in layer_neigh for vid in k])
         self.neigh_id2 = all_neighbors
         if self.garment_layer == 'Body':
@@ -64,9 +64,7 @@ class Runner(object):
             self.garment_f_np = self.body_f_np
             self.garment_f_torch = self.smpl_faces
         else:
-            self.garment_f_np = Mesh \
-                (filename='/BS/garvita2/static00/ClothSize_data/gcn_assets/real_{}_{}_{}.obj'.format(self.garment_class
-                                                                                                    ,self.res_name, self.garment_layer)).f
+            self.garment_f_np = Mesh(filename=os.path.join(DATA_DIR,'real_{}_{}_{}.obj'.format(self.garment_class,self.res_name, self.garment_layer))).f
             self.garment_f_torch = torch.tensor(self.garment_f_np.astype(np.long)).long().to(device)
 
         self.out_layer = torch.nn.Softmax(dim=2)
@@ -162,7 +160,12 @@ def get_model(log_dir, epoch_num=None):
     return runner
 
 if __name__ == '__main__':
-    log_dir = '/scratch/BS/pool1/garvita/parser/g5/UpperClothes_vn_20_hres'
+    parser = argparse.ArgumentParser(description='Evaluating ParserNet')
+
+    parser.add_argument('--log_dir', default="")
+    args = parser.parse_args()
+
+    log_dir = args.log_dir
     runner = get_model(log_dir)
     _, dist, gt, pred, inp, gar_faces, body_faces = runner.eval_test()
     print('average v2v error: ', dist)

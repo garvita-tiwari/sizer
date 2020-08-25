@@ -2,9 +2,11 @@ import numpy as np
 import pickle as pkl
 from smpl_lib.serialization import backwards_compatibility_replacements, load_model
 import scipy.sparse as sp
-SMPL_PATH_NEUTRAL = '/BS/RVH/work/data/smpl_models/neutral/basicModel_neutral_lbs_10_207_0_v1.0.0.pkl'
-SMPL_PATH_MALE = '/BS/RVH/work/data/smpl_models/lrotmin/lbs_tj10smooth6_0fixed_normalized/male/model.pkl'
-SMPL_PATH_FEMALE = '/BS/RVH/work/data/smpl_models/lrotmin/lbs_tj10smooth6_0fixed_normalized/female/model.pkl'
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+
+SMPL_PATH_NEUTRAL = os.path.join(DATA_DIR, 'basicModel_neutral_lbs_10_207_0_v1.0.0.pkl')
+SMPL_PATH_MALE =  os.path.join(DATA_DIR,'model.pkl')
+SMPL_PATH_FEMALE =  os.path.join(DATA_DIR,'model_female.pkl')
 
 def get_hres(v, f):
     """
@@ -20,7 +22,6 @@ def get_hres(v, f):
     return (nv, nf, mapping)
 
 
-# smpl_vt_ft_path = '/BS/bharat/work/MGN_final_release/assets/smpl_vt_ft.pkl'
 class SmplPaths:
     def __init__(self, project_dir='', exp_name='', gender='neutral', garment=''):
         self.project_dir = project_dir

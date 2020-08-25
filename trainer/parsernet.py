@@ -23,6 +23,8 @@ from data_utils.geomtery import get_res_vert, get_vid
 
 device = torch.device("cuda:0")
 
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+
 class Trainer(object):
     def __init__(self, params):
         self.device= device
@@ -38,7 +40,7 @@ class Trainer(object):
         if self.res_name == 'lres':
             self.hres = False
         # log
-        LOG_DIR = '/scratch/BS/pool1/garvita/parser'
+        LOG_DIR = params['log_dir']
 
         self.model_name = 'FC_correspondence_{}'.format(self.res_name)
         self.note = "FC_corr_{}_{}_{}".format(self.garment_class, self.garment_layer, self.res_name)
@@ -65,7 +67,7 @@ class Trainer(object):
             input_dim = self.smpl_size * 6
         output_dim = self.layer_size *  self.num_neigh
 
-        layer_neigh = np.array(np.load("/BS/garvita2/static00/ClothSize_data/gcn_assets/real_{}_neighborheuristics_{}_{}_{}_gar_order2.npy".format(self.garment_class, self.res_name, self.garment_layer, self.num_neigh)))
+        layer_neigh = np.array(np.load(os.path.join(DATA_DIR, "real_{}_neighborheuristics_{}_{}_{}_gar_order2.npy".format(self.garment_class, self.res_name, self.garment_layer, self.num_neigh))))
         self.layer_neigh = torch.from_numpy(layer_neigh).cuda()
 
         #separate for body layer
@@ -107,7 +109,7 @@ class Trainer(object):
             self.garment_f_np = self.body_f_np
             self.garment_f_torch = self.smpl_faces
         else:
-            self.garment_f_np = Mesh(filename='/BS/garvita2/static00/ClothSize_data/gcn_assets/real_{}_{}_{}.obj'.format(self.garment_class,self.res_name, self.garment_layer)).f
+            self.garment_f_np = Mesh(filename=os.path.join(DATA_DIR,'real_{}_{}_{}.obj'.format(self.garment_class,self.res_name, self.garment_layer))).f
             self.garment_f_torch = torch.tensor(self.garment_f_np.astype(np.long)).long().to(device)
 
         self.num_faces = len(self.garment_f_np)
@@ -125,7 +127,7 @@ class Trainer(object):
             state_dict = torch.load(os.path.join(ckpt_path, 'optimizer.pth.tar'))
             self.optimizer.load_state_dict(state_dict)
 
-        geo_weights = np.load('/BS/garvita2/static00/ClothSize_data/gcn_assets/weights/real_g5_geo_weights.npy')
+        geo_weights = np.load(os.path.join(DATA_DIR, 'real_g5_geo_weights.npy'))
         self.geo_weights = torch.tensor(geo_weights[body_vert2].astype(np.float32)).cuda()
         self.best_error = np.inf
         self.best_epoch = -1
@@ -276,6 +278,7 @@ def parse_argument():
     parser.add_argument('--garment_class', default="g5")
     parser.add_argument('--garment_layer', default="UpperClothes")
     parser.add_argument('--gender', default="male")
+    parser.add_argument('--log_dir', default="")
     parser.add_argument('--res', default="hres")
     parser.add_argument('--feat', default="vn")  #vc_vn
     parser.add_argument('--num_neigh', default=20, type=int)
