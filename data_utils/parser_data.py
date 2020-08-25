@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 import pickle
 import ipdb
 
-from data_utils.geomtery import get_vertex_normals, nearest_map, get_res_vert, get_vid
+from data_utils.geomtery import  get_res_vert, get_vid
 
 class ParserData(Dataset):
 

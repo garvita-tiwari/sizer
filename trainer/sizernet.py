@@ -20,7 +20,7 @@ from models.torch_smpl4garment import TorchSMPL4Garment
 
 
 from data_utils.sizer_data import  SizerData
-from data_utils.geomtery import get_vertex_normals, nearest_map, get_res_vert, get_vid
+from data_utils.geomtery import  get_res_vert, get_vid
 
 
 device = torch.device("cuda:0")
