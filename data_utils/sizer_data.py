@@ -8,7 +8,7 @@ import ipdb
 
 from data_utils.geomtery import  get_res_vert, get_vid
 
-DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+from utils.global_var import DATA_DIR
 def one_hot(a, num_classes):
     hot = np.zeros((num_classes), np.uint8)
     hot[a] = 1

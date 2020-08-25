@@ -3,7 +3,7 @@ import pickle as pkl
 import os
 from smpl_lib.serialization import backwards_compatibility_replacements, load_model
 import scipy.sparse as sp
-DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+from utils.global_var import DATA_DIR
 
 SMPL_PATH_NEUTRAL = os.path.join(DATA_DIR, 'basicModel_neutral_lbs_10_207_0_v1.0.0.pkl')
 SMPL_PATH_MALE =  os.path.join(DATA_DIR,'model.pkl')

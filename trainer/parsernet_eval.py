@@ -22,7 +22,7 @@ from models.torch_smpl4garment import TorchSMPL4Garment
 
 from data_utils.parser_data import ParserData
 from data_utils.geomtery import get_res_vert, get_vid
-DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+from utils.global_var import DATA_DIR
 
 device = torch.device("cuda:0")
 class Runner(object):

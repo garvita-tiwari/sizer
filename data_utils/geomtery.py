@@ -8,7 +8,7 @@ import os
 from kaolin.rep import TriangleMesh as tm
 from kaolin.metrics.mesh import point_to_surface, laplacian_loss, TriangleDistance
 
-DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+from utils.global_var import DATA_DIR
 def get_res_vert(garment='ShirtNoCoat', hres=True, garment_type='UpperClothes'):
     res= 'lres'
     body_vert = 6890
