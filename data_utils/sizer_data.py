@@ -31,7 +31,7 @@ class SizerData(Dataset):
         train_data = pickle.load(
             open('/BS/garvita2/static00/ClothSize_data2/training_data/real_{}_size.pkl'.format(garment_class), 'rb'),
             encoding="latin1")
-        ipdb.set_trace()
+
         data_name = np.array(train_data['0']['scan_name'])
         self.trans0 = np.array(train_data['0']['trans']).astype(np.float32)
         self.trans1 = np.array(train_data['1']['trans']).astype(np.float32)
@@ -55,9 +55,9 @@ class SizerData(Dataset):
         self.gar_vert1 = np.array(train_data['1']['pose_upper'])[:, :self.layer_size, :].astype(np.float32)
         self.gar_vert2 = np.array(train_data['2']['pose_upper'])[:, :self.layer_size, :].astype(np.float32)
 
-        self.size1 = np.array(train_data['0']['size']).reshape(gar_vert0.shape[0], 1)
-        self.size2 = np.array(train_data['1']['size']).reshape(gar_vert0.shape[0], 1)
-        self.size3 = np.array(train_data['2']['size']).reshape(gar_vert0.shape[0], 1)
+        size1 = np.array(train_data['0']['size']).reshape(self.gar_vert0.shape[0], 1)
+        size2 = np.array(train_data['1']['size']).reshape(self.gar_vert0.shape[0], 1)
+        size3 = np.array(train_data['2']['size']).reshape(self.gar_vert0.shape[0], 1)
 
         self.size_label_hot1 = np.array([one_hot(i, 4) for i in size1]).astype(np.float32)
         self.size_label_hot2 = np.array([one_hot(i, 4) for i in size2]).astype(np.float32)

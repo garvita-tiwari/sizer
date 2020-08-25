@@ -14,7 +14,6 @@ import torch.nn as nn
 from kaolin.rep import TriangleMesh as tm
 from kaolin.metrics.point import  SidedDistance
 
-
 from models import network_layers
 from models.loss import lap_loss, interp_loss, data_loss, normal_loss, verts_dist
 from models.torch_smpl4garment import TorchSMPL4Garment
@@ -52,7 +51,6 @@ class Trainer(object):
 
         with open(os.path.join(self.log_dir , "params.json"), 'w') as f:
             json.dump(params, f)
-
 
         self.iter_nums = 0 if 'iter_nums' not in params else params['iter_nums']
 
@@ -263,10 +261,6 @@ class Trainer(object):
             sum_val_loss += data_loss(self.garment_layer, pred_verts, gt_verts).item()
         return sum_val_loss, sum_val_loss
 
-    def write_log(self):
-        if self.best_epoch >= 0:
-            self.csv_logger.add_item(best_error=self.best_error, best_epoch=self.best_epoch, **self.params)
-
     def _save_ckpt(self, epoch):
         save_dir = os.path.join(self.log_dir, "{:04d}".format(epoch))
         if not os.path.exists(save_dir):
@@ -307,4 +301,3 @@ if __name__ == '__main__':
         if i % 200 == 0:
             trainer.train_epoch(i, train=False)
 
-    trainer.write_log()
