@@ -1,5 +1,6 @@
 import numpy as np
 import pickle as pkl
+import os
 from smpl_lib.serialization import backwards_compatibility_replacements, load_model
 import scipy.sparse as sp
 DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'

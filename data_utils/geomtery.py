@@ -8,7 +8,7 @@ import os
 from kaolin.rep import TriangleMesh as tm
 from kaolin.metrics.mesh import point_to_surface, laplacian_loss, TriangleDistance
 
-ROOT_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
+DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
 def get_res_vert(garment='ShirtNoCoat', hres=True, garment_type='UpperClothes'):
     res= 'lres'
     body_vert = 6890
@@ -33,10 +33,11 @@ def get_vid(garment, gar, hres=True):
     res='lres'
     if hres:
         res = 'hres'
-    if gar == 'real_g6':
-        gar = 'real_g5'
-    vert_difile = os.path.join(ROOT_DIR,'{}_{}_vertid_{}.npy'.format(gar, res, garment))
-    if os.path.exists(vert_difile):
-        vert_id = np.load(vert_difile)
+    if gar == 'g6':
+        gar = 'g5'
+    vert_difile = os.path.join(DATA_DIR,'real_{}_{}_vertid_{}.npy'.format(gar, res, garment))
+    assert(os.path.exists(vert_difile))
+    vert_id = np.load(vert_difile)
+
 
     return vert_id

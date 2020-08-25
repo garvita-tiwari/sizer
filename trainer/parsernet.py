@@ -72,8 +72,8 @@ class Trainer(object):
 
         #separate for body layer
         body_vert = range(self.smpl_size)
-        vert_id_upper = get_vid('UpperClothes', self.garment_class, False)
-        vert_id_lower = get_vid('Pants', self.garment_class, False)
+        vert_id_upper = get_vid('UpperClothes', self.garment_class, self.hres)
+        vert_id_lower = get_vid('Pants', self.garment_class, self.hres)
         body_vert2 = [i for i in body_vert if i not in vert_id_upper]
         body_vert2 = [i for i in body_vert2 if i not in vert_id_lower]
         self.body_vert = body_vert2
@@ -86,7 +86,7 @@ class Trainer(object):
             self.idx2 = torch.from_numpy(self.neigh_id2).view(self.layer_size, self.num_neigh).cuda()
 
         #get vert indixed of layer
-        self.vert_indices = get_vid(self.garment_layer, self.garment_class,False)
+        self.vert_indices = get_vid(self.garment_layer, self.garment_class,self.hres)
         self.vert_indices = torch.tensor(self.vert_indices.astype(np.long)).long().cuda()
 
         # dataset and dataloader
