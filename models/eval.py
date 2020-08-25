@@ -53,3 +53,24 @@ def pairwise_distances(x, y=None):
 
     dist = x_norm + y_norm - 2.0 * torch.mm(x, torch.transpose(y, 0, 1))
     return dist
+
+def batched_index_select(inp, dimn, idx):
+    ipdb.set_trace()
+    views = [inp.shape[0]] + [1 if i != dimn else -1 for i in range(1, len(inp.shape))]
+    expanse = list(inp.shape)
+    expanse[0] = -1
+    expanse[dimn] = -1
+    idx = idx.view(views).expand(expanse)
+    return torch.gather(inp, dimn, idx)
+
+
+def nearest_neighbour(pt1, pt2):
+    # get the product x * y
+    # here, y = x.t()
+    r = torch.mm(mat, mat.t())
+    # get the diagonal elements
+    diag = r.diag().unsqueeze(0)
+    diag = diag.expand_as(r)
+    # compute the distance matrix
+    D = diag + diag.t() - 2*r
+    return D.sqrt()
