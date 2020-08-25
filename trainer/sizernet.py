@@ -18,8 +18,8 @@ from kaolin.metrics.point import  SidedDistance
 sys.path.append('/BS/garvita/work/code/sizer')
 
 from models import network_layers
-from models.eval import AverageMeter, verts_dist
-from data_utils.mesh_dataloader import  SizerData
+from models.loss import lap_loss, interp_loss, data_loss, normal_loss, verts_dist
+from data_utils.sizer_data import  SizerData
 from data_utils.geomtery import get_vertex_normals, nearest_map, get_res_vert, get_vid
 sys.path.append('/BS/garvita/work/libs/core_gt')
 from log_utils import sio

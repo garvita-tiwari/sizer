@@ -11,7 +11,7 @@ from data_utils.geomtery import get_vertex_normals, nearest_map, get_res_vert, g
 class ParserData(Dataset):
 
 
-    def __init__(self,  garment_class, garment_layer, mode, batch_size, res='hres', gender='male', vc = False, vn= True, num_workers = 12,**kwargs):
+    def __init__(self,  garment_class, garment_layer, mode, batch_size, res='hres', gender='male', feat=None, num_workers = 12,**kwargs):
         super(ParserData, self).__init__()
 
         self.garment_class = garment_class
@@ -32,19 +32,16 @@ class ParserData(Dataset):
         self.betas = np.array(train_data["betas"]).astype(np.float32)
         self.pose = np.array(train_data["pose"]).astype(np.float32)
         self.trans = np.array(train_data["trans"]).astype(np.float32)
-        if vc:
-            all_vc = np.array(train_data['vc'])[:, :self.body_size, :].astype(np.float32)
-        if vn:
-            all_vn = np.array(train_data['vn'])[:, :self.body_size, :].astype(np.float32)
+        all_vc = np.array(train_data['vc'])[:, :self.body_size, :].astype(np.float32)
+        all_vn = np.array(train_data['vn'])[:, :self.body_size, :].astype(np.float32)
 
-        if vc and vn:
-            self.input2net = np.concatenate((self.reg_mesh, all_vc, all_vn), axis=2)
-        elif vc:
-            self.input2net = np.concatenate((self.reg_mesh, all_vc), axis=2)
-        elif vn:
-            self.input2net = np.concatenate((self.reg_mesh, all_vn), axis=2)
-        else:
+        if feat is None:
             self.input2net = self.self.body_size
+        elif feat =='vn':
+            self.input2net = np.concatenate((self.reg_mesh, all_vn), axis=2)
+        elif feat == 'vn_vc':
+            self.input2net = np.concatenate((self.reg_mesh, all_vc, all_vn), axis=2)
+
 
         #load train,val, test split
         split_file = '/BS/garvita/static00/training_dataset/{}_split.pkl'.format(self.garment_class)
@@ -53,30 +50,6 @@ class ParserData(Dataset):
 
         self.batch_size = batch_size
         self.num_workers = num_workers
-
-        # self.sample_distribution = np.array(sample_distribution)
-        # self.sample_sigmas = np.array(sample_sigmas)
-        #
-        # assert np.sum(self.sample_distribution) == 1
-        # assert np.any(self.sample_distribution < 0) == False
-        # assert len(self.sample_distribution) == len(self.sample_sigmas)
-        #
-        # self.path = data_path
-        # self.split = np.load(split_file)
-        # self.data = self.split[mode]
-
-        #
-        # self.res = res
-        #
-        # self.num_sample_points = num_sample_points
-        # self.batch_size = batch_size
-        # self.num_workers = num_workers
-        # self.voxelized_pointcloud = voxelized_pointcloud
-        # self.pointcloud_samples = pointcloud_samples
-        #
-        # # compute number of samples per sampling method
-        # self.num_samples = np.rint(self.sample_distribution * num_sample_points).astype(np.uint32)
-        #
 
 
     def __len__(self):
@@ -90,15 +63,3 @@ class ParserData(Dataset):
                 'betas':np.array(self.betas[idx], dtype=np.float32),
                 'trans': np.array(self.trans[idx], dtype=np.float32),
                 'pose': np.array(self.pose[idx], dtype=np.float32)}
-
-
-    # def get_loader(self, shuffle =True):
-    #
-    #     return torch.utils.data.DataLoader(
-    #             self, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=shuffle,
-    #             worker_init_fn=self.worker_init_fn)
-    #
-    # def worker_init_fn(self, worker_id):
-    #     random_data = os.urandom(4)
-    #     base_seed = int.from_bytes(random_data, byteorder="big")
-    #     np.random.seed(base_seed + worker_id)
