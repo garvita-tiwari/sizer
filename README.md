@@ -3,7 +3,8 @@
 Code and model for SIZER: A DATASET AND MODEL FOR PARSING 3D CLOTHING AND LEARNING SIZE SENSITIVE 3D CLOTHING, ECCV 2020(Oral)
 
   - [Website](https://virtualhumans.mpi-inf.mpg.de/sizer/) 
-  - [Dataset](https://nextcloud.mpi-klsb.mpg.de/index.php/s/nx6wK6BJFZCTF8C) 
+  - [Dataset](https://nextcloud.mpi-klsb.mpg.de/index.php/s/nx6wK6BJFZCTF8C)
+    (Drop a mail to : gtiwari@mpi-inf.mpg.de for getting acces to dataset) 
   - [Pre-trained model](https://nextcloud.mpi-klsb.mpg.de/index.php/s/nx6wK6BJFZCTF8C) :Coming soon
 
 ### Pre-requistes
