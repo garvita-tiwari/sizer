@@ -7,7 +7,6 @@ Code and model for SIZER: A DATASET AND MODEL FOR PARSING 3D CLOTHING AND LEARNI
     (Drop a mail to : gtiwari@mpi-inf.mpg.de for getting access to dataset)
   - [Fill this form for dataset](https://docs.google.com/forms/d/e/1FAIpQLSddBep3Eif1gI-6IhaZybBDoR-_H_QW1NST0JV5vviauvPNTA/viewform?usp=sf_link) 
   
-
 ### Pre-requistes
 [MPI mesh library](https://github.com/MPI-IS/mesh)
 [Kaolin](https://github.com/NVIDIAGameWorks/kaolin)
