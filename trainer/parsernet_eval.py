@@ -16,8 +16,7 @@ from kaolin.metrics.point import  SidedDistance
 
 
 from models import network_layers
-from models.loss import lap_loss, interp_loss, data_loss, normal_loss
-from models.eval import AverageMeter, verts_dist, batched_index_select
+from models.loss import lap_loss, interp_loss, data_loss, normal_loss, verts_dist
 from models.torch_smpl4garment import TorchSMPL4Garment
 
 from data_utils.parser_data import ParserData
