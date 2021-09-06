@@ -27,8 +27,6 @@ Tested on Pytorch 1.4, cuda 10.1, python 3.6.10
 ### Evaluating SizerNet:
     python trainer/sizernet_eval.py --log_dir <log_dir_path> -
 
-### Evaluation script for other datasets:
-    coming soon..
     
 ### Citation:
     @inproceedings{tiwari20sizer,
