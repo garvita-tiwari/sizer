@@ -1,5 +1,10 @@
 # SIZER: A DATASET AND MODEL FOR PARSING 3D CLOTHING AND LEARNING SIZE SENSITIVE 3D CLOTHING
 
+
+#### For SIZER Dataset: 
+    https://github.com/garvita-tiwari/sizer_dataset
+    
+    
 Code and model for SIZER: A DATASET AND MODEL FOR PARSING 3D CLOTHING AND LEARNING SIZE SENSITIVE 3D CLOTHING, ECCV 2020(Oral)
 
   - [Website](https://virtualhumans.mpi-inf.mpg.de/sizer/) 
