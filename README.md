@@ -9,30 +9,34 @@ Code and model for SIZER: A DATASET AND MODEL FOR PARSING 3D CLOTHING AND LEARNI
 
   - [Website](https://virtualhumans.mpi-inf.mpg.de/sizer/) 
   - [Dataset and Model](https://nextcloud.mpi-klsb.mpg.de/index.php/s/nx6wK6BJFZCTF8C)
-    (Drop a mail to : gtiwari@mpi-inf.mpg.de for getting access to dataset)
+    (Drop a mail to : gtiwari@mpi-inf.mpg.de(or garvita.tiwari@uni-tuebingen.de) for getting access to dataset)
   - [Fill this form for dataset](https://docs.google.com/forms/d/e/1FAIpQLSddBep3Eif1gI-6IhaZybBDoR-_H_QW1NST0JV5vviauvPNTA/viewform?usp=sf_link) 
   
-### Pre-requistes
-[MPI mesh library](https://github.com/MPI-IS/mesh)
-[Kaolin](https://github.com/NVIDIAGameWorks/kaolin)
-Tested on Pytorch 1.4, cuda 10.1, python 3.6.10
+
+###SIZER Dataset:
+    https://github.com/garvita-tiwari/sizer_dataset
 
 ### Data path:
     set DATA_DIR='<downloaded dataset path>/training_data' in utils/global_var.py 
 
+### Conda Environment:
+    conda create --name sizer --file requirements.txt
+    conda activate sizer
+
+
 ### Training ParserNet:
-    python trainer/parsernet.py --log_dir <log_dir_path> - 
+    python trainer.py --config=<configs/parser_default.yaml>
 
 ### Evaluating ParserNet:
-    python trainer/parsernet_eval.py --log_dir <log_dir_path> -
+    python generate.py --config=<configs/parser_default.yaml>
 
 ### Training SizerNet:
-    python trainer/sizernet.py --log_dir <log_dir_path> - 
+    python  trainer.py --config=<configs/sizer_default.yaml>
 
 ### Evaluating SizerNet:
-    python trainer/sizernet_eval.py --log_dir <log_dir_path> -
+    python generate.py --config=<configs/sizer_default.yaml>
 
-    
+
 ### Citation:
     @inproceedings{tiwari20sizer,
     title = {SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing},
