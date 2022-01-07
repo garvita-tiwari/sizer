@@ -1,14 +1,13 @@
 import numpy as np
-from psbody.mesh import Mesh
+# from psbody.mesh import Mesh
 import torch
 import ipdb
 import sys
 import pickle as pkl
 import os
-from kaolin.rep import TriangleMesh as tm
-from kaolin.metrics.mesh import point_to_surface, laplacian_loss, TriangleDistance
+# from kaolin.rep import TriangleMesh as tm
+# from kaolin.metrics.mesh import point_to_surface, laplacian_loss, TriangleDistance
 
-from utils.global_var import DATA_DIR
 def get_res_vert(garment='ShirtNoCoat', hres=True, garment_type='UpperClothes'):
     res= 'lres'
     body_vert = 6890
@@ -25,17 +24,15 @@ def get_res_vert(garment='ShirtNoCoat', hres=True, garment_type='UpperClothes'):
                  'g7_lres_Pants': 2710, 'g7_lres_UpperClothes': 4758,
                  'g7_hres_Pants': 2710, 'g7_hres_UpperClothes': 4758,
                  'g1_lres_Body': 6890,  'g2_lres_Body': 6890,  'g3_lres_Body': 6890,
-                 'g4_lres_Body': 6890,  'g7_lres_Body': 6890,  'g1__lres':2438, 'Pants_hres': 4041}
+                 'g4_lres_Body': 6890, 'g5_hres_Body': 27554,  'g7_lres_Body': 6890,  'g1__lres':2438, 'Pants_hres': 4041}
     return num_verts['{}_{}_{}'.format(garment, res,garment_type)], body_vert
 
-def get_vid(garment, gar, hres=True):
+def get_vid(data_dir, garment, gar, res='lres'):
 
-    res='lres'
-    if hres:
-        res = 'hres'
+
     if gar == 'g6':
         gar = 'g5'
-    vert_difile = os.path.join(DATA_DIR,'real_{}_{}_vertid_{}.npy'.format(gar, res, garment))
+    vert_difile = os.path.join(data_dir,'{}/{}_{}_id.npy'.format(gar, garment, res))
     assert(os.path.exists(vert_difile))
     vert_id = np.load(vert_difile)
 

@@ -9,7 +9,7 @@ import pickle
 from utils.smpl_paths import SmplPaths
 
 DATA_DIR = '/scratch/BS/pool1/garvita/parser/meta_data'
-GAR_INFO_FILE = 'garment_class_info.pkl'
+GAR_INFO_FILE = '/BS/cloth-anim/static00/tailor_data/garment_class_info.pkl'
 class TorchSMPL4Garment(nn.Module):
     """Pytorch version of models.smpl4garment.SMPL4Garment class."""
     def __init__(self, gender):
@@ -18,7 +18,7 @@ class TorchSMPL4Garment(nn.Module):
         # with open(model_path, 'rb') as reader:
         #     model = pickle.load(reader, encoding='iso-8859-1')
         model = SmplPaths(gender=gender).get_hres_smpl_model_data()
-        with open(os.path.join(DATA_DIR, GAR_INFO_FILE), 'rb') as f:
+        with open(GAR_INFO_FILE, 'rb') as f:
             class_info = pickle.load(f)
         for k in class_info.keys():
             if isinstance(class_info[k]['vert_indices'], np.ndarray):

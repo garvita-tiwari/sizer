@@ -1,0 +1,35 @@
+data:
+  data_dir: /BS/RVH_3dscan/static00/SIZER/dataset/g5_size.npz # Training data directory
+  split_file: /BS/cloth3d/static00/nasa_data/smpl_sdf/split_all.npz # Training data directory
+  meta_data: /BS/garvita4/static00/sizer_final/mesh_utils
+experiment:
+  type: SizerNet
+  root_dir: /BS/RVH_3dscan_raw2/static00/model/neuralgif/sizer
+  data_name: SizerData
+  garment_class: g5
+  garment_layer: UpperClothes
+  gender: male
+  resolution: hres
+  feat: v
+  num_neigh: 50
+  num_part: 24
+model:
+  name: SizerNet
+  total_dim: 960 #[1024, 512, 256,128]
+  num_layers: 5
+train:
+  device: cuda
+  batch_size: 4
+  continue_train: true
+  optimizer: Adam
+  optimizer_param: 0.00001 #1e-4  #1e-4 for lr and 0.9 for momentum
+  eval: false
+  num_worker: 30
+  max_epoch: 20000
+  loss_type: l2
+  wgt_wgt: 1.0
+  data_wgt: 1.0
+  spr_wgt: 0.001
+  dropout: 0.3
+  train_stage_1: 2000  #pretrain weight prediction
+  train_stage_2: 10000  #freeze weight prediction

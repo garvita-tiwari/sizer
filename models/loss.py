@@ -1,8 +1,6 @@
 import torch.nn as nn
 import torch
-from kaolin.metrics.mesh import point_to_surface, laplacian_loss, TriangleDistance
-from kaolin.metrics.point import  SidedDistance
-from kaolin.rep import TriangleMesh as tm
+
 
 def data_loss(garment_layer, pred_verts, gt_verts, geo_weights=None):
 

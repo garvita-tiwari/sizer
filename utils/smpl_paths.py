@@ -5,9 +5,10 @@ from smpl_lib.serialization import backwards_compatibility_replacements, load_mo
 import scipy.sparse as sp
 from utils.global_var import DATA_DIR
 
-SMPL_PATH_NEUTRAL = os.path.join(DATA_DIR, 'basicModel_neutral_lbs_10_207_0_v1.0.0.pkl')
-SMPL_PATH_MALE =  os.path.join(DATA_DIR,'model.pkl')
-SMPL_PATH_FEMALE =  os.path.join(DATA_DIR,'model_female.pkl')
+SMPL_PATH_NEUTRAL = '/BS/RVH/work/data/smpl_models/neutral/basicModel_neutral_lbs_10_207_0_v1.0.0.pkl'
+SMPL_PATH_MALE = '/BS/RVH/work/data/smpl_models/lrotmin/lbs_tj10smooth6_0fixed_normalized/male/model.pkl'
+SMPL_PATH_FEMALE = '/BS/RVH/work/data/smpl_models/lrotmin/lbs_tj10smooth6_0fixed_normalized/female/model.pkl'
+
 
 def get_hres(v, f):
     """
